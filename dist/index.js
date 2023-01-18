@@ -8,8 +8,10 @@ const typeDefs = `#graphql
 
   # This "Book" type defines the queryable fields for every book in our data source.
   type Book {
+    id: Int
     title: String
     author: String
+    rating: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -21,10 +23,12 @@ const typeDefs = `#graphql
 `;
 const books = [
     {
+        id: 1,
         title: "The Awakening",
         author: "Kate Chopin",
     },
     {
+        id: 2,
         title: "City of Glass",
         author: "Paul Auster",
     },
@@ -34,6 +38,20 @@ const books = [
 const resolvers = {
     Query: {
         books: () => books,
+    },
+    Book: {
+        id({ id }) {
+            return id;
+        },
+        title({ title }) {
+            return title;
+        },
+        author({ author }) {
+            return author;
+        },
+        rating({ id }) {
+            return id * 2;
+        },
     },
 };
 // The ApolloServer constructor requires two parameters: your schema
